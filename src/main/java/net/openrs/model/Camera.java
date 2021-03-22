@@ -2,9 +2,7 @@ package net.openrs.model;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
-import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
+import org.lwjgl.opengl.GL11;
 
 public class Camera {
     public static float moveSpeed = 0.05f;

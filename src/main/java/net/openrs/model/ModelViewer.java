@@ -51,7 +51,7 @@ public class ModelViewer {
 			list.initialize(cache);
 		}
 
-		Model md = list.list(Integer.valueOf(args[0]));
+		Model md = list.list(Integer.parseInt(args[0]));
 
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setTitle("Model Viewer");

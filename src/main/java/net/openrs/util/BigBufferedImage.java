@@ -11,8 +11,6 @@ package net.openrs.util;
  * http://nyomdmegteis.hu/en/
  */
 
-import sun.nio.ch.DirectBuffer;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -24,6 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.List;
@@ -271,7 +270,7 @@ public class BigBufferedImage extends BufferedImage {
             FileDataBufferDeleterHook.undisposedBuffers.remove(this);
             if (disposedBuffer != null) {
                 for (MappedByteBuffer b : disposedBuffer) {
-                    ((DirectBuffer) b).cleaner().clean();
+                    b.clear();
                 }
             }
             if (accessFiles != null) {
