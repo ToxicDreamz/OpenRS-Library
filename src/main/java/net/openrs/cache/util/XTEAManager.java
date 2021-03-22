@@ -18,9 +18,13 @@
  */
 package net.openrs.cache.util;
 
+import com.google.gson.Gson;
 import net.openrs.cache.Constants;
+import net.openrs.cache.xtea.XteaKey;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -33,10 +37,11 @@ import java.util.Map;
  */
 public class XTEAManager {
 
-      private static final Map<Integer, int[]> maps = new HashMap<Integer, int[]>();
-      private static final Map<Integer, int[]> tables = new HashMap<Integer, int[]>();
-
+      private static final Map<Integer, int[]> maps = new HashMap();
+      private static final Map<Integer, int[]> tables = new HashMap();
+      private static final Gson gson = new Gson();
       public static final int[] NULL_KEYS = new int[4];
+
 
       public static final int[] lookupTable(int id) {
             int[] keys = tables.get(id);
@@ -54,49 +59,58 @@ public class XTEAManager {
             return keys;
       }
 
-      static {
-            try {
+      public static int[] lookup(int region) {
+            return maps.getOrDefault(region, NULL_KEYS);
+      }
 
-                  File xMapDir = new File(Constants.XMAP_PATH);
+      public static boolean load(File xteaDir) throws IOException {
+            int region;
+            if (xteaDir.isDirectory()) {
+                  File[] files = xteaDir.listFiles() == null ? new File[0] : xteaDir.listFiles();
+                  File[] var2 = files;
+                  int var3 = files.length;
 
-                  if (!xMapDir.exists()) {
-                        xMapDir.mkdirs();
-                  }
-
-                  for (File file : xMapDir.listFiles()) {
+                  for(int var4 = 0; var4 < var3; ++var4) {
+                        File file = var2[var4];
                         if (file.getName().endsWith(".txt")) {
-                              Integer regionID = Integer.valueOf(file.getName().substring(0,
-                                          file.getName().indexOf(".txt")));
-
-                              int[] keys = Files.lines(Paths.get(".")
-                                          .resolve(Constants.XMAP_PATH + file.getName()))
-                                          .map(Integer::valueOf).mapToInt(Integer::intValue).toArray();
-
-                              maps.put(regionID, keys);
+                              region = Integer.valueOf(file.getName().substring(0, file.getName().indexOf(".txt")));
+                              int[] keys = Files.lines(xteaDir.toPath().resolve(file.getName())).map(Integer::valueOf).mapToInt(Integer::intValue).toArray();
+                              maps.put(region, keys);
                         }
                   }
+            } else {
+                  FileReader fos = new FileReader(xteaDir);
+                  Throwable var18 = null;
 
-                  File xTableDir = new File(Constants.XTABLE_PATH);
+                  try {
+                        XteaKey[] keys = (XteaKey[])gson.fromJson(fos, XteaKey[].class);
+                        XteaKey[] var20 = keys;
+                        int var21 = keys.length;
 
-                  if (!xTableDir.exists()) {
-                        xTableDir.mkdirs();
-                  }
-
-                  for (File file : xTableDir.listFiles()) {
-                        if (file.getName().endsWith(".txt")) {
-                              Integer typeID = Integer.valueOf(file.getName().substring(0,
-                                          file.getName().indexOf(".txt")));
-
-                              int[] keys = Files.lines(Paths.get(".")
-                                      .resolve(Constants.XTABLE_PATH + file.getName()))
-                                      .map(Integer::valueOf).mapToInt(Integer::intValue).toArray();
-
-                              tables.put(typeID, keys);
+                        for(region = 0; region < var21; ++region) {
+                              XteaKey key = var20[region];
+                              maps.put(key.getRegion(), key.getKeys());
                         }
+                  } catch (Throwable var15) {
+                        var18 = var15;
+                        throw var15;
+                  } finally {
+                        if (fos != null) {
+                              if (var18 != null) {
+                                    try {
+                                          fos.close();
+                                    } catch (Throwable var14) {
+                                          var18.addSuppressed(var14);
+                                    }
+                              } else {
+                                    fos.close();
+                              }
+                        }
+
                   }
-            } catch (Exception e) {
-                  e.printStackTrace();
             }
+
+            return !maps.isEmpty();
       }
       
       public static void touch() { };

@@ -21,6 +21,7 @@
  */
 package net.openrs.cache.type;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -32,7 +33,7 @@ public interface Type {
 
 	public void decode(ByteBuffer buffer);
 
-	public ByteBuffer encode();
+	public ByteBuffer encode(DataOutputStream dataOutputStream);
 	
 	public ByteBuffer encode317();
 

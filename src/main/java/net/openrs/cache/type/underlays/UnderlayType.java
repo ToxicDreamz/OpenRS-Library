@@ -24,6 +24,7 @@ package net.openrs.cache.type.underlays;
 import net.openrs.cache.type.Type;
 import net.openrs.util.ByteBufferUtils;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -63,7 +64,7 @@ public class UnderlayType implements Type {
 	 * @see net.openrs.net.openrs.cache.type.Type#encode()
 	 */
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(5);
 		if (color != 0) {
 			buffer.put((byte) 1);

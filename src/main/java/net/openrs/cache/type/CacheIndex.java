@@ -39,7 +39,7 @@ public enum CacheIndex {
 	REFERENCE(255), 
 	SKELETONS(0), 
 	SKINS(1),
-	SOUNDEFFECTS(4), 
+	SOUND_EFFECT(4),
 	SPRITES(8), 
 	TEXTURES(9), 
 	TRACK1(6), 
