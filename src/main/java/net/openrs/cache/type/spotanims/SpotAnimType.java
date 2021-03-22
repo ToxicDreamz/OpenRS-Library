@@ -23,6 +23,7 @@ package net.openrs.cache.type.spotanims;
 
 import net.openrs.cache.type.Type;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -105,7 +106,7 @@ public class SpotAnimType implements Type {
 	 * @see net.openrs.net.openrs.cache.type.Type#encode()
 	 */
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(39);
 		return (ByteBuffer) buffer.flip();
 	}

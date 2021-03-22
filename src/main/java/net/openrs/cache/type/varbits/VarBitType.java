@@ -24,6 +24,7 @@ package net.openrs.cache.type.varbits;
 import net.openrs.cache.type.Type;
 import net.openrs.util.BitUtils;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -67,7 +68,7 @@ public class VarBitType implements Type {
 	 * @see net.openrs.net.openrs.cache.type.Type#encode()
 	 */
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(6);
 		if (configID != -1 || leastSigBit != -1 || mostSigBit != -1) {
 			buffer.put((byte) 1);

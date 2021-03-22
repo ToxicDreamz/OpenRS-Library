@@ -23,6 +23,7 @@ package net.openrs.cache.type.invs;
 
 import net.openrs.cache.type.Type;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -62,7 +63,7 @@ public class InvType implements Type {
 	 * @see net.openrs.net.openrs.cache.type.Type#encode()
 	 */
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(4);
 		if (capacity != 0) {
 			buffer.put((byte) 2);

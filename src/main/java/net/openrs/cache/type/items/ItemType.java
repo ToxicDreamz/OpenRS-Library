@@ -25,6 +25,7 @@ import net.openrs.cache.type.Type;
 import net.openrs.util.BitUtils;
 import net.openrs.util.ByteBufferUtils;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -231,7 +232,7 @@ public class ItemType implements Type {
 	}
 
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(1132);
 		return (ByteBuffer) buffer.flip();
 	}

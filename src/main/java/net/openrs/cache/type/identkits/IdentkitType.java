@@ -23,6 +23,7 @@ package net.openrs.cache.type.identkits;
 
 import net.openrs.cache.type.Type;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -99,7 +100,7 @@ public class IdentkitType implements Type {
 	 * @see net.openrs.net.openrs.cache.type.Type#encode()
 	 */
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(1132);
 		return (ByteBuffer) buffer.flip();
 	}

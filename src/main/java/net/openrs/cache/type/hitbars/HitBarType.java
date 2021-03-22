@@ -24,6 +24,7 @@ package net.openrs.cache.type.hitbars;
 import net.openrs.cache.type.Type;
 import net.openrs.util.ByteBufferUtils;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -92,7 +93,7 @@ public class HitBarType implements Type {
 	 * @see net.openrs.net.openrs.cache.type.Type#encode()
 	 */
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		ByteBuffer buffer = ByteBuffer.allocate(1132);
 		return (ByteBuffer) buffer.flip();
 	}

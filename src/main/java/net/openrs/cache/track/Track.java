@@ -27,6 +27,7 @@ package net.openrs.cache.track;
 import net.openrs.cache.type.Type;
 import net.openrs.util.ByteBufferUtils;
 
+import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -392,7 +393,7 @@ public class Track implements Type {
 	}
 
 	@Override
-	public ByteBuffer encode() {
+	public ByteBuffer encode(DataOutputStream dataOutputStream) {
 		throw new UnsupportedOperationException("This has not been added yet.");
 	}
 
